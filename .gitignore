@@ -2,6 +2,8 @@
 *.py[cod]
 *.zip
 jenkins_home
+ssh_key
+ssh_key.pub
 
 # C extensions
 *.so
