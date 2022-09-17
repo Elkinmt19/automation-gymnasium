@@ -11,3 +11,19 @@ services:
     volumes:
       - $PWD/jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins_net
+
+  remote_host:
+    container_name: remote-host
+    image: remote-host
+    build:
+      context: remote-host
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/remote-host:/tmp
+    networks:
+      - jenkins_net
+
+networks:
+  jenkins_net:
