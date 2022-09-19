@@ -15,8 +15,8 @@ services:
       - jenkins_net
 
   remote_host:
-    container_name: remote-host
-    image: remote-host
+    container_name: remote_host
+    image: remote_host
     build:
       context: remote-host
       dockerfile: Dockerfile
