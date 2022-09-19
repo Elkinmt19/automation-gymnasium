@@ -18,7 +18,7 @@ services:
     container_name: remote_host
     image: remote_host
     build:
-      context: remote-host
+      context: centos-remote-host
       dockerfile: Dockerfile
     volumes:
       - $PWD/remote-host:/tmp
