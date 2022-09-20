@@ -14,6 +14,8 @@ RUN chown remote_elkin_user:remote_elkin_user -R /home/remote_elkin_user/.ssh/ &
 
 RUN ssh-keygen -A
 
+RUN yum -y install mysql
+
 RUN mkdir /var/run/sshd && chmod 0755 /var/run/sshd
 
 CMD /usr/sbin/sshd -D 
