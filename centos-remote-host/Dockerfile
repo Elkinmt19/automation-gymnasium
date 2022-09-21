@@ -16,6 +16,14 @@ RUN ssh-keygen -A
 
 RUN yum -y install mysql
 
+RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+    --create-dirs \
+    -o $HOME/minio-binaries/mc
+
+RUN chmod +x $HOME/minio-binaries/mc && \
+    echo "export PATH=$PATH:$HOME/minio-binaries/" >> $HOME/.bashrc
+
+
 RUN mkdir /var/run/sshd && chmod 0755 /var/run/sshd
 
 CMD /usr/sbin/sshd -D 
