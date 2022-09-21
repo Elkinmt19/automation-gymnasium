@@ -2,6 +2,8 @@
 *.py[cod]
 *.zip
 jenkins_home
+mysql_home
+minio_home
 ssh_key
 ssh_key.pub
 
