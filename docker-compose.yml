@@ -1,15 +1,19 @@
 version: '3.8'
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    container_name: jenkins
+    image: jenkins_server
+    build:
+      context: jenkins-server
+      dockerfile: Dockerfile
     privileged: true
     user: root
     ports:
       - 8080:8080
       - 50000:50000
-    container_name: jenkins
     volumes:
       - $PWD/jenkins_home:/var/jenkins_home
+      - $PWD/jenkins-server/ansible:/var/jenkins_home/ansible
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jenkins_net
@@ -21,9 +25,45 @@ services:
       context: centos-remote-host
       dockerfile: Dockerfile
     volumes:
-      - $PWD/remote-host:/tmp
+      - $PWD/centos-remote-host:/tmp
     networks:
       - jenkins_net
+
+  mysql_db:
+    container_name: mysql_db
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DB_USER}
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    volumes:
+      - $PWD/mysql-db/mysql_home:/var/lib/mysql
+      - $PWD/mysql-db/db:/docker-entrypoint-initdb.d
+    networks:
+      - jenkins_net
+
+  minio:
+    container_name: minio
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - $PWD/minio_home:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
 
 networks:
   jenkins_net:
