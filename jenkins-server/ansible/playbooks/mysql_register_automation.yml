@@ -1,0 +1,5 @@
+- name: MySQL register table
+  hosts: databases
+  tasks: 
+    - name: Create and populate the register table
+      shell: sh /tmp/scripts/create_register_table.sh "{{ MYSQL_DB_USER }}" "{{ MYSQL_DB_PASSWORD }}" "{{ MYSQL_DB_HOST }}" "{{ DB_NAME }}"
