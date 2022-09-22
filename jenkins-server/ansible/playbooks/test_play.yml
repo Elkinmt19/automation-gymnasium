@@ -1,0 +1,3 @@
+- hosts: test1 
+  tasks:
+    - shell: echo "This is awesome, hello world from ansible, jenkins and {{ NAME }} {{ LASTNAME }}" > /tmp/test_play_output.txt
