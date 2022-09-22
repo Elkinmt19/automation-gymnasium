@@ -18,10 +18,11 @@ RUN yum -y install mysql
 
 RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
     --create-dirs \
-    -o $HOME/minio-binaries/mc
+    -o /home/remote_elkin_user/minio-binaries/mc && \
+    chown -R remote_elkin_user /home/remote_elkin_user/minio-binaries/ 
 
-RUN chmod +x $HOME/minio-binaries/mc && \
-    echo "export PATH=$PATH:$HOME/minio-binaries/" >> $HOME/.bashrc
+RUN chmod +x /home/remote_elkin_user/minio-binaries/mc && \
+    echo "export PATH=$PATH:/home/remote_elkin_user/minio-binaries/" >> /home/remote_elkin_user/.bashrc
 
 
 RUN mkdir /var/run/sshd && chmod 0755 /var/run/sshd
