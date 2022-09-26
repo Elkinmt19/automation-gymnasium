@@ -6,6 +6,13 @@ This project has some projects that implements different automation strategies u
     <img src="assets/imgs/jenkins_logo.png" width="80%"/>
 </p>
 
+## Getting Started
+In order to be able to run the projects of this repository, first you have to setup the containers with all the needed tools, to do so, use the following command:
+
+```bash 
+docker-compose up -d
+```
+
 ## Author
 ## Elkin Javier Guerra Galeano <img src="./assets/imgs/robotboy_fly.gif"/>
 
