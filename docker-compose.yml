@@ -14,6 +14,7 @@ services:
     volumes:
       - $PWD/jenkins_home:/var/jenkins_home
       - $PWD/jenkins-server/ansible:/var/jenkins_home/ansible
+      - $PWD/jenkins-server/dsl:/var/jenkins_home/workspace/dsl-jenkins-jobs-seed
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jenkins_net
