@@ -1,0 +1,31 @@
+job('mysql-table-creation-population-automation-dsl') {
+
+    description('This is a simple automation process to automate the creation and population of the register tables of a MySQL database.')
+
+    parameters {
+        stringParam('MYSQL_DB_HOST', 'mysql_db')
+        stringParam('DB_NAME', 'people')
+    }
+
+    wrappers {
+        credentialsBinding {
+            string('MYSQL_DB_USER', 'MYSQL_DB_USER')
+            string('MYSQL_DB_PASSWORD', 'MYSQL_DB_PASSWORD')
+        }
+        colorizeOutput(colorMap = 'xterm')
+    }
+
+    steps {
+        ansiblePlaybook('/var/jenkins_home/ansible/playbooks/mysql_register_automation.yml') {
+            inventoryPath('/var/jenkins_home/ansible/hosts')
+            colorizedOutput(true)
+            extraVars {
+                extraVar('MYSQL_DB_USER', '${MYSQL_DB_USER}', false)
+                extraVar('MYSQL_DB_PASSWORD', '${MYSQL_DB_PASSWORD}', false)
+                extraVar('MYSQL_DB_HOST', '${MYSQL_DB_HOST}', false)
+                extraVar('DB_NAME', '${DB_NAME}', false)
+            }
+        }
+
+    }
+}
