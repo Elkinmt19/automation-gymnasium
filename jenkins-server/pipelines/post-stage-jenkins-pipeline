@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Test') {
+            steps {
+                sh 'echo "Testing the post section of the Jenkins pipeline"; exit 1'
+            }
+        }
+    }
+    post {
+        always {
+            echo "This is always executed!!!"
+        }
+        success {
+            echo "This is executed if the pipeline success!!!"
+        }
+        failure {
+            echo "This is always executed if the pipeline failes!!!"
+        }
+        unstable {
+            echo "This is always executed if the pipeline is unstable!!!"
+        }
+    }
+}
