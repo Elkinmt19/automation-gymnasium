@@ -3,6 +3,7 @@ FROM jenkins/jenkins:lts
 USER root
 
 COPY requirements.txt /tmp/requirements.txt
+COPY install_docker_in_jenkins.sh /tmp/docker_install.sh
 
 RUN apt-get update && apt install -y wget && \
     apt install -y build-essential && \
@@ -24,5 +25,7 @@ RUN wget https://www.python.org/ftp/python/3.9.1/Python-3.9.1.tgz && \
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
     python3.9 get-pip.py && \
     pip install -r /tmp/requirements.txt --upgrade
+
+RUN sh /tmp/docker_install.sh
 
 USER jenkins
